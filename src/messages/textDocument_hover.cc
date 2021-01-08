@@ -34,6 +34,7 @@ const char *languageIdentifier(LanguageId lang) {
   // clang-format off
   case LanguageId::C: return "c";
   case LanguageId::Cpp: return "cpp";
+  case LanguageId::Cuda: return "cuda";
   case LanguageId::ObjC: return "objective-c";
   case LanguageId::ObjCpp: return "objective-cpp";
   default: return "";

@@ -44,7 +44,7 @@ std::pair<LanguageId, bool> lookupExtension(std::string_view filename) {
   auto i = types::lookupTypeForExtension(
       sys::path::extension({filename.data(), filename.size()}).substr(1));
   bool header = i == types::TY_CHeader || i == types::TY_CXXHeader ||
-                i == types::TY_ObjCXXHeader;
+                i == types::TY_ObjCXXHeader || i == types::TY_CUDAHeader;
   bool objc = types::isObjC(i);
   LanguageId ret;
   if (types::isCXX(i))
@@ -241,6 +241,9 @@ std::vector<const char *> getFallback(const std::string &path) {
   std::vector<const char *> argv{"clang"};
   if (sys::path::extension(path) == ".h")
     argv.push_back("-xobjective-c++-header");
+  else if (sys::path::extension(path) == ".cuh")
+    argv.push_back("-xcuda-header");
+
   argv.push_back(intern(path));
   return argv;
 }
