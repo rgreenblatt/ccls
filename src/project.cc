@@ -118,6 +118,8 @@ struct ProjectProcessor {
             ok |= lang == LanguageId::Cpp;
           else if (a.consume_front("%cu "))
             ok |= lang == LanguageId::Cuda;
+          else if (a.consume_front("%cuh "))
+            ok |= lang == LanguageId::Cuda && header;
           else if (a.consume_front("%hpp "))
             ok |= lang == LanguageId::Cpp && header;
           else if (a.consume_front("%objective-c "))
@@ -239,10 +241,11 @@ bool appendToCDB(const std::vector<const char *> &args) {
 
 std::vector<const char *> getFallback(const std::string &path) {
   std::vector<const char *> argv{"clang"};
-  if (sys::path::extension(path) == ".h")
+  if (sys::path::extension(path) == ".h") {
     argv.push_back("-xobjective-c++-header");
-  else if (sys::path::extension(path) == ".cuh")
+  } else if (sys::path::extension(path) == ".cuh") {
     argv.push_back("-xcuda-header");
+  }
 
   argv.push_back(intern(path));
   return argv;
