@@ -183,7 +183,8 @@ struct Config {
       // auto-completion. An example value is { ".h", ".hpp" }
       //
       // This is significantly faster than using a regex.
-      std::vector<std::string> suffixWhitelist = {".h", ".hpp", ".hh", ".inc"};
+      std::vector<std::string> suffixWhitelist = {".h", ".hpp", ".cuh", ".hh",
+                                                  ".inc"};
 
       std::vector<std::string> whitelist;
     } include;
